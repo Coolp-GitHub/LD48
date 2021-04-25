@@ -32,16 +32,27 @@ public class Loader : MonoBehaviour
 
         void Enable(GameObject obj)
         {
-            obj.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            
             obj.gameObject.GetComponent<Rigidbody2D>().simulated = true;
             obj.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+
+
+            if (obj.gameObject.GetComponent<SpriteRenderer>() != null)
+            {
+                obj.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            }
         }
 
         void Disable(GameObject obj)
         {
-            obj.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            
             obj.gameObject.GetComponent<Rigidbody2D>().simulated = false;
             obj.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+            if (obj.gameObject.GetComponent<SpriteRenderer>() != null)
+            {
+                obj.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
     }
 }
