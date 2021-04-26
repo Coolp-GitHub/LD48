@@ -9,39 +9,46 @@ public class BreakingBlocks : MonoBehaviour
     [SerializeField] private bool held;
     [SerializeField] private GameObject player;
     private float _result;
-    public Inventory Inventory;
-
+    [SerializeField] private float BreakTime = 1f;
+    public Inventory inventory;
+    public Shop shop;
     private void Awake()
     {
         player = GameObject.Find("Player");
-        
-   
-        
+        inventory =   player.GetComponent<Inventory>();
+
+
+        shop = player.GetComponent<Shop>();
+
     }
 
     private void OnDestroy()
     {
+       
         switch (this.gameObject.name)
         {
-            case "Grass":
-                Inventory.inventory[0] = Inventory.inventory[0] + 1;
+            case "Grass(Clone)":
+                inventory.inv[0]++;
                 break;
-            case "dirt":
-                Inventory.inventory[1] = Inventory.inventory[1] + 1;
+            case "dirt(Clone)":
+                inventory.inv[1]++;
                 break;
-            case "rock":
-                Inventory.inventory[2] += Inventory.inventory[2] + 1;
+            case "rock(Clone)":
+                inventory.inv[2]++;
                 break;
-            case "iron":
-                Inventory.inventory[3] += Inventory.inventory[3] + 1;
+            case "iron(Clone)":
+                inventory.inv[3]++;
                 break;
-            case "gold":
-                Inventory.inventory[4] += Inventory.inventory[4] + 1;
+            case "gold(Clone)":
+                inventory.inv[4]++;
                 break;
-            case "diamond":
-                Inventory.inventory[5] += Inventory.inventory[5] + 1;
+            case "diamond(Clone)":
+                inventory.inv[5]++;
                 break;
         }
+
+     
+       
     }
 
     private void Update()
@@ -52,6 +59,8 @@ public class BreakingBlocks : MonoBehaviour
          _result = Vector3.SqrMagnitude(player.gameObject.transform.position - this.transform.position);
         if (broke)
         {
+            
+            
            Destroy(gameObject);
         }
         
@@ -63,7 +72,7 @@ public class BreakingBlocks : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (_result < 25f)
+        if (_result < 9f)
         {
 
             held = Input.GetButton("Fire1");
@@ -80,7 +89,15 @@ public class BreakingBlocks : MonoBehaviour
 
     IEnumerator breakTimer()
     {
-        yield return new WaitForSeconds(1f);
+        if (shop.miningSPeedBuff == 0)
+        {
+            yield return new WaitForSeconds(BreakTime);
+        }
+        else
+        {
+            yield return new WaitForSeconds(BreakTime - shop.miningSPeedBuff/10);
+        }
+        
         broke = held;
     }
 

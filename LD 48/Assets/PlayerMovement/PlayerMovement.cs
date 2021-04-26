@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,18 +7,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float horMove;
     private bool _jump = false;
     [SerializeField] private float runSpeed;
-      
+    public Shop shop;
 
-        
+
+    private void Awake()
+    {
+        shop = gameObject.GetComponent<Shop>();
+    }
 
 
     void Update()
     {
+        if (shop.speedBuff == 0)
+        {
+            horMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        }
+        else
+        {
+            horMove = Input.GetAxisRaw("Horizontal") * runSpeed * shop.speedBuff;
+        }
 
-        horMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-                
-        
-        
+
 
         if (Input.GetButtonDown("Jump"))
         {

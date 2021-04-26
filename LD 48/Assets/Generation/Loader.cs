@@ -13,10 +13,10 @@ public class Loader : MonoBehaviour
 
 
 
-        if (check.x > -.1 && check.x < 1.1)
+        if (check.x > -.02 && check.x < 1.02)
         {
             Enable(this.gameObject);
-            if (check.y > -.05 && check.y < 1.05)
+            if (check.y > -.02 && check.y < 1.02)
             {
                 Enable(this.gameObject);
             }

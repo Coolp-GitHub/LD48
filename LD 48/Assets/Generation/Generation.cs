@@ -15,8 +15,9 @@ public class Generation : MonoBehaviour
     [SerializeField] private GameObject iron;
     [SerializeField] private GameObject gold;
     [SerializeField] private GameObject diamonds;
+   
 
-     private int rand;
+     private float rand;
 
     public Camera cam;
 
@@ -48,10 +49,10 @@ public class Generation : MonoBehaviour
 
             }
             
-            for (float y = -64f; y < height; y++)
+            for (float y = -100f; y < height; y++)
             {
-                rand = Random.Range(1,Random.Range(1,6));
-                
+                rand = Mathf.RoundToInt(Random.Range(1f, Random.Range(1f, Random.Range(1f, 7f) + Mathf.Abs(this.transform.position.y / 100f))));
+               
                 if (y < totalStoneSpawnDistance)
                 {
                     switch (rand)
@@ -63,14 +64,18 @@ public class Generation : MonoBehaviour
                             spawnObj(stone, x, y);
                             break;
                         case 3:
-                            spawnObj(iron,x,y);
+                            spawnObj(stone,x,y);
                             break;
                         case 4:
-                            spawnObj(gold,x,y);
+                            spawnObj(iron,x,y);
                             break;
                         case 5:
+                            spawnObj(gold,x,y);
+                            break;
+                        case 6:
                             spawnObj(diamonds,x,y);
                             break;
+                        
                        
                     }
                 }
@@ -95,12 +100,19 @@ public class Generation : MonoBehaviour
         obj.AddComponent<BoxCollider2D>();
         obj.AddComponent<Loader>();
         obj.AddComponent<BreakingBlocks>();
-        obj.gameObject.layer = 3;
+        
         Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
        rb.gravityScale = 0;
-       rb.constraints = RigidbodyConstraints2D.FreezeAll | RigidbodyConstraints2D.FreezeAll;
-
        
+        rb.constraints = RigidbodyConstraints2D.FreezeAll | RigidbodyConstraints2D.FreezeAll;
+           obj.gameObject.layer = 3;
+
+
+           BoxCollider2D collider = obj.GetComponent<BoxCollider2D>();
+
+           collider.size = new Vector2(0.9f, 0.9f);
+
+
 
 
     }
